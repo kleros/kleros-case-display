@@ -1,0 +1,22 @@
+query Dispute($id: ID!) {
+  dispute(id: $id) {
+    arbitrated
+    metaEvidenceId
+    arbitrableHistory {
+      metaEvidence
+    }
+    ruling
+    ruled
+    period
+    lastPeriodChange
+    createdAtBlock
+    evidenceGroup {
+      length
+      evidence {
+        creationTime
+        URI
+        sender
+      }
+    }
+  }
+}
