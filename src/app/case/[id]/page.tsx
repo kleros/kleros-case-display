@@ -9,19 +9,24 @@ import {
 export default async function Page({ params }: { params: { id: string } }) {
   const disputeId = params.id;
 
-  const data = await getSubgraphData("Dispute", disputeId);
-  const dispute = data?.dispute;
-  const justifications = await getJustifications(+disputeId, 0);
-  const metaEvidence = dispute?.arbitrableHistory?.metaEvidence
-    ? await getMetaEvidence(dispute.arbitrableHistory.metaEvidence)
-    : null;
-  const evidence = dispute?.evidenceGroup?.evidence
-    ? await getEvidenceWithFiles(dispute?.evidenceGroup?.evidence.reverse())
-    : [];
-
   if (isNaN(+disputeId)) return <div>Invalid Dispute ID...</div>;
-  if (!data) return <div>Loading...</div>;
-  if (!dispute) return <div>Subgraph Error...</div>;
+
+  const [justifications, data] = await Promise.all([
+    getJustifications(+disputeId, 0),
+    getSubgraphData("Dispute", disputeId),
+  ]);
+
+  const dispute = data?.dispute;
+  if (!data || !dispute) return <div>Subgraph Error...</div>;
+
+  const [metaEvidence = null, evidence = []] = await Promise.all([
+    dispute.arbitrableHistory?.metaEvidence
+      ? await getMetaEvidence(dispute.arbitrableHistory.metaEvidence)
+      : undefined,
+    dispute.evidenceGroup?.evidence
+      ? await getEvidenceWithFiles(dispute.evidenceGroup.evidence.reverse())
+      : undefined,
+  ]);
 
   return (
     <DisputeDoc
