@@ -1,6 +1,6 @@
 "use client";
 
-import EvidenceItem from "@components/EvidenceItem";
+import EvidenceItem, { EvidenceData } from "@components/EvidenceItem";
 import JustificationItem from "@components/JustificationItem";
 import useNonSubgraphMetaEvidence from "@hooks/useNonSubgraphMetaEvidence";
 import Steps from "@components/Steps";
@@ -20,11 +20,13 @@ interface Props {
   dispute: NonNullable<DisputeQuery["dispute"]>;
   justifications: Justification[];
   subgraphMetaEvidence: MetaEvidenceFile | null;
+  evidence: EvidenceData[];
 }
 
 export default function DisputeDoc({
   disputeId,
   dispute,
+  evidence,
   justifications,
   subgraphMetaEvidence,
 }: Props) {
@@ -109,7 +111,7 @@ export default function DisputeDoc({
           <h2 className="mb-4 text-3xl">
             Evidence ({dispute.evidenceGroup.length} items)
           </h2>
-          {dispute.evidenceGroup.evidence.reverse().map((evidence, idx) => (
+          {evidence.map((evidence, idx) => (
             <EvidenceItem key={idx} evidence={evidence} index={idx} />
           ))}
         </section>

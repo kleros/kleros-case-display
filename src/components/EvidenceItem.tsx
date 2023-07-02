@@ -1,30 +1,30 @@
-import { useMemo } from "react";
-import useIPFS from "@hooks/useIPFS";
+import { Suspense, useMemo } from "react";
 import { explorerLink, ipfs, shortenAddress } from "@utils";
 import Link from "next/link";
 import Image from "next/image";
 
-interface EvidenceFile {
+export interface EvidenceFile {
   title?: string;
   description?: string;
   fileURI?: string;
 }
 
+export interface EvidenceData {
+  creationTime: number;
+  URI?: string;
+  sender: any;
+  file?: EvidenceFile;
+}
+
 interface EvidenceItemInterface {
   index: number;
-  evidence: {
-    creationTime: any;
-    URI: string;
-    sender: any;
-  };
+  evidence: EvidenceData;
 }
 
 const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
-  const [evidenceFile] = useIPFS<EvidenceFile>(evidence.URI);
-
   const fileNameDisplay = useMemo(() => {
-    if (evidenceFile?.fileURI) {
-      const lastQuerySubstring = evidenceFile.fileURI.split("/").at(-1);
+    if (evidence.file?.fileURI) {
+      const lastQuerySubstring = evidence.file.fileURI.split("/").at(-1);
       if (
         lastQuerySubstring &&
         (lastQuerySubstring.includes(".") || lastQuerySubstring.length !== 46)
@@ -33,9 +33,7 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
     }
 
     return "FILE";
-  }, [evidenceFile?.fileURI]);
-
-  if (!evidenceFile) return null;
+  }, [evidence.file?.fileURI]);
 
   return (
     <div className="w-full py-4 flex">
@@ -43,13 +41,13 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
         {index + 1}.
       </span>
       <div className="flex flex-col">
-        {evidenceFile.title ? (
-          <h2 className="text-3xl">{evidenceFile.title}</h2>
+        {evidence.file?.title ? (
+          <h2 className="text-3xl">{evidence.file.title}</h2>
         ) : (
           <h2 className="text-3xl text-slate-300">Untitled</h2>
         )}
-        {evidenceFile.description && <p>{evidenceFile.description}</p>}
-        {evidenceFile.fileURI && (
+        {evidence.file?.description && <p>{evidence.file.description}</p>}
+        {evidence.file?.fileURI && (
           <span className="flex items-center text-sky-500 cursor-pointer text-lg font-semibold">
             <Image
               src="/attachment.svg"
@@ -59,7 +57,7 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
             />
             <Link
               className="ml-1"
-              href={ipfs(evidenceFile.fileURI)}
+              href={ipfs(evidence.file.fileURI)}
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -78,9 +76,11 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
             >
               {shortenAddress(evidence.sender)}
             </Link>
-            {" on "}
+            {" at "}
             <span>
-              {new Date(evidence.creationTime * 1000).toLocaleString()}
+              <Suspense fallback={null}>
+                {new Date(evidence.creationTime * 1000).toLocaleString()}
+              </Suspense>
             </span>
           </span>
         </div>
