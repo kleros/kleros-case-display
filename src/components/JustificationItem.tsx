@@ -1,6 +1,3 @@
-import { explorerLink, shortenAddress } from "@utils";
-import Link from "next/link";
-import TimeAgo from "./TimeAgo";
 import { Justification } from "@hooks/useJustifications";
 
 interface JustificationItemInterface extends Justification {
@@ -10,15 +7,18 @@ interface JustificationItemInterface extends Justification {
 const JustificationItem: React.FC<JustificationItemInterface> = ({
   voteID,
   justification,
-}) => {
-  return (
-    <div className="mt-4 flex flex-col">
-      <div className="px-4 py-2 flex items-center">
-        {voteID}
-        <div className="pl-2 flex flex-col">{justification}</div>
-      </div>
+}) => (
+  <div className="w-full py-4 flex">
+    <span className="w-8 pr-2 flex flex-col items-end text-slate-300">
+      <span className="text-xs">Vote</span>
+      <span>
+        #<strong className="text-xl text-semibold">{voteID}</strong>
+      </span>
+    </span>
+    <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300">
+      {justification}
     </div>
-  );
-};
+  </div>
+);
 
 export default JustificationItem;

@@ -1,5 +1,6 @@
 import { justificationsLink } from "@utils";
 import axios from "axios";
+import { cache } from "react";
 import useSWR from "swr";
 
 export interface Justification {
@@ -10,14 +11,17 @@ export interface Justification {
   created_at: string;
 }
 
-const justificationsFetcher = async ([disputeId, appeal]: [number, number]) =>
+const justificationsFetcher = async ([disputeId, appeal]: [
+  number,
+  number
+]): Promise<Justification[]> =>
   (await axios.get(justificationsLink(disputeId, appeal))).data.payload
     .justifications;
 
 const useJustifications = (
   disputeId: number,
   appeal: number
-): [Justification[], Error] => {
+): [Justification[] | undefined, Error] => {
   const { data, error } = useSWR(
     [disputeId, appeal, "justifications"],
     justificationsFetcher,
@@ -30,5 +34,10 @@ const useJustifications = (
 
   return [data, error];
 };
+
+export const getJustifications = cache(
+  async (disputeId: number, appeal: number) =>
+    await justificationsFetcher([disputeId, appeal])
+);
 
 export default useJustifications;

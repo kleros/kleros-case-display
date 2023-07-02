@@ -1,3 +1,4 @@
+import Image from "next/image";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -15,7 +16,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="page-border">
+          <div className="content">
+            <header className="w-full flex justify-center">
+              <Image src="/kleros.svg" alt="kleros" width="148" height="48" />
+            </header>
+            <main>{children}</main>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

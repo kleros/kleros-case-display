@@ -1,9 +1,8 @@
-import { Evidence } from "@generated/graphql";
+import { useMemo } from "react";
 import useIPFS from "@hooks/useIPFS";
 import { explorerLink, ipfs, shortenAddress } from "@utils";
 import Link from "next/link";
-import TimeAgo from "./TimeAgo";
-import Identicon from "./Identicon";
+import Image from "next/image";
 
 interface EvidenceFile {
   title?: string;
@@ -23,33 +22,54 @@ interface EvidenceItemInterface {
 const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
   const [evidenceFile] = useIPFS<EvidenceFile>(evidence.URI);
 
+  const fileNameDisplay = useMemo(() => {
+    if (evidenceFile?.fileURI) {
+      const lastQuerySubstring = evidenceFile.fileURI.split("/").at(-1);
+      if (
+        lastQuerySubstring &&
+        (lastQuerySubstring.includes(".") || lastQuerySubstring.length !== 46)
+      )
+        return lastQuerySubstring;
+    }
+
+    return "FILE";
+  }, [evidenceFile?.fileURI]);
+
   if (!evidenceFile) return null;
 
   return (
-    <div className="mt-4 flex flex-col">
-      <div className="relative px-8 py-4">
-        <span className="absolute left-3 text-sm text-slate-500">{index}</span>
-        <div className="flex justify-between text-xl font-bold">
-          {evidenceFile.fileURI && (
+    <div className="w-full py-4 flex">
+      <span className="w-12 pr-2 flex flex-col items-end text-slate-300 text-3xl text-semibold">
+        {index + 1}.
+      </span>
+      <div className="flex flex-col">
+        {evidenceFile.title ? (
+          <h2 className="text-3xl">{evidenceFile.title}</h2>
+        ) : (
+          <h2 className="text-3xl text-slate-300">Untitled</h2>
+        )}
+        {evidenceFile.description && <p>{evidenceFile.description}</p>}
+        {evidenceFile.fileURI && (
+          <span className="flex items-center text-sky-500 cursor-pointer text-lg font-semibold">
+            <Image
+              src="/attachment.svg"
+              alt="attachment"
+              width="18"
+              height="18"
+            />
             <Link
+              className="ml-1"
+              href={ipfs(evidenceFile.fileURI)}
               rel="noopener noreferrer"
               target="_blank"
-              href={ipfs(evidenceFile?.fileURI)}
             >
-              FILE
+              {fileNameDisplay}
             </Link>
-          )}
-        </div>
-      </div>
-      <div>
-        {evidenceFile.title && <h2>{evidenceFile.title}</h2>}
-        {evidenceFile.description && <p>{evidenceFile.description}</p>}
-      </div>
-      <div className="px-4 py-2 flex items-center">
-        <Identicon diameter={32} address={evidence.sender} />
-        <div className="pl-2 flex flex-col">
+          </span>
+        )}
+        <div className="flex flex-col">
           <span>
-            submitted by{" "}
+            Submitted by{" "}
             <Link
               className="text-blue-500 underline underline-offset-2"
               href={explorerLink(evidence.sender)}
@@ -58,8 +78,11 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
             >
               {shortenAddress(evidence.sender)}
             </Link>
+            {" on "}
+            <span>
+              {new Date(evidence.creationTime * 1000).toLocaleString()}
+            </span>
           </span>
-          <TimeAgo time={evidence.creationTime} />
         </div>
       </div>
     </div>

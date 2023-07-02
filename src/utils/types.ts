@@ -1,14 +1,21 @@
-interface MetaEvidenceFile {
+export interface MetaEvidenceFile {
   title: string;
-  category: string;
   description: string;
-  aliases: {};
   question: string;
+  fileURI: string;
+  evidenceDisplayInterfaceURI?: string;
+  arbitrableInterfaceURI?: string;
   rulingOptions: {
-    type: "single-select";
+    type: string;
     titles: string[];
     descriptions: string[];
   };
-  fileURI: string;
-  dynamicScriptURI: string;
+}
+
+export interface Justification {
+  id: string;
+  disputeIDAndAppeal: string;
+  voteID: number;
+  justification: string;
+  created_at: string;
 }

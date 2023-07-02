@@ -1,3 +1,46 @@
 @tailwind base;
+@layer base {
+  .page-border {
+    @apply m-4 p-1.5 gradient;
+  }
+
+  .content {
+    @apply p-4 bg-white;
+  }
+
+  section {
+    @apply w-full flex flex-col items-center;
+  }
+}
+
 @tailwind components;
+@layer components {
+  .bordered {
+    @apply p-0.5 gradient rounded;
+  }
+
+  .divider {
+    @apply h-0.5 w-full gradient opacity-20 rounded;
+  }
+
+  .divider-v {
+    @apply w-0.5 h-full gradient opacity-20 rounded;
+  }
+}
+
 @tailwind utilities;
+@layer utilities {
+  .gradient {
+    background: linear-gradient(
+      90deg,
+      #5700cc,
+      #5200c0,
+      #4d00b4,
+      #4800a8,
+      #43009c,
+      #3e0091,
+      #390085,
+      #34007a
+    );
+  }
+}

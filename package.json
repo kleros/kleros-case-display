@@ -16,6 +16,7 @@
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "classnames": "^2.3.2",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
     "ethers": "^6.6.2",
@@ -28,7 +29,6 @@
     "react-jazzicon": "^1.0.4",
     "swr": "^2.2.0",
     "tailwindcss": "3.3.2",
-    "timeago.js": "^4.0.2",
     "typescript": "5.1.6"
   },
   "devDependencies": {
