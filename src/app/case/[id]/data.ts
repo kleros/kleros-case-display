@@ -2,9 +2,8 @@
 
 import { EvidenceData, EvidenceFile } from "@components/EvidenceItem";
 import { getSdk } from "@generated/graphql";
-import { ipfsFetcher } from "@hooks/useIPFS";
-import { justificationsLink } from "@utils";
-import { Justification, MetaEvidenceFile } from "@utils/types";
+import { ipfsFetcher, justificationsLink } from "@utils";
+import { MetaEvidenceFile } from "@utils/types";
 import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import { cache } from "react";
@@ -17,16 +16,10 @@ export const getSubgraphData = cache(
   async (key: keyof typeof sdk, id: string) => await sdk[key]({ id })
 );
 
-const justificationsFetcher = async ([disputeId, appeal]: [
-  number,
-  number
-]): Promise<Justification[]> =>
-  (await axios.get(justificationsLink(disputeId, appeal))).data.payload
-    .justifications;
-
 export const getJustifications = cache(
   async (disputeId: number, appeal: number) =>
-    await justificationsFetcher([disputeId, appeal])
+    (await axios.get(justificationsLink(disputeId, appeal))).data.payload
+      .justifications
 );
 
 export const getMetaEvidence = cache(

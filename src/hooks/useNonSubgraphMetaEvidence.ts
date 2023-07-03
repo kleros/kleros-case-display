@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ipfsFetcher } from "./useIPFS";
 import { Arbitrable__factory } from "@generated/contracts";
 import { JsonRpcProvider } from "ethers";
 import { DisputeQuery } from "@generated/graphql";
 import { MetaEvidenceFile } from "@utils/types";
+import { ipfsFetcher } from "@utils";
 
 const rpcProvider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_ENDPOINT);
 
