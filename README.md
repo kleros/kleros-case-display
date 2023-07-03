@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/52eb1bc3-3927-452a-8f33-6a0c47598bf4/deploy-status?branch=main)](https://app.netlify.com/sites/kleros-court-lemon/deploys)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
