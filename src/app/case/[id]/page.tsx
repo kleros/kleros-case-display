@@ -21,10 +21,10 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const [metaEvidence = null, evidence = []] = await Promise.all([
     dispute.arbitrableHistory?.metaEvidence
-      ? await getMetaEvidence(dispute.arbitrableHistory.metaEvidence)
+      ? getMetaEvidence(dispute.arbitrableHistory.metaEvidence)
       : undefined,
     dispute.evidenceGroup?.evidence
-      ? await getEvidenceWithFiles(dispute.evidenceGroup.evidence.reverse())
+      ? getEvidenceWithFiles(dispute.evidenceGroup.evidence.reverse())
       : undefined,
   ]);
 
