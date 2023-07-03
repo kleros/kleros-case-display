@@ -1,4 +1,4 @@
-import { Justification } from "@hooks/useJustifications";
+import { Justification } from "@utils/types";
 
 interface JustificationItemInterface extends Justification {
   index: number;
