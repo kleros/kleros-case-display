@@ -209,5 +209,44 @@
 		],
 		"name": "NewPeriod",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+		  {
+			"name": "_disputeID",
+			"type": "uint256"
+		  },
+		  {
+			"name": "_appeal",
+			"type": "uint256"
+		  },
+		  {
+			"name": "_voteID",
+			"type": "uint256"
+		  }
+		],
+		"name": "getVote",
+		"outputs": [
+		  {
+			"name": "account",
+			"type": "address"
+		  },
+		  {
+			"name": "commit",
+			"type": "bytes32"
+		  },
+		  {
+			"name": "choice",
+			"type": "uint256"
+		  },
+		  {
+			"name": "voted",
+			"type": "bool"
+		  }
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]

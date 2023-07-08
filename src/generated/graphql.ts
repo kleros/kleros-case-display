@@ -94,13 +94,25 @@ export type Dispute = {
   arbitrableHistory?: Maybe<ArbitrableHistory>;
   arbitrated: Scalars['Bytes']['output'];
   createdAtBlock: Scalars['BigInt']['output'];
-  evidenceGroup?: Maybe<EvidenceGroup>;
+  evidenceGroup: EvidenceGroup;
   id: Scalars['ID']['output'];
   lastPeriodChange: Scalars['BigInt']['output'];
   metaEvidenceId: Scalars['BigInt']['output'];
+  nbChoices: Scalars['BigInt']['output'];
+  nbRounds: Scalars['BigInt']['output'];
   period: Period;
+  rounds: Array<Round>;
   ruled: Scalars['Boolean']['output'];
   ruling: Scalars['BigInt']['output'];
+};
+
+
+export type DisputeRoundsArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Round_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Round_Filter>;
 };
 
 export type Dispute_Filter = {
@@ -171,11 +183,28 @@ export type Dispute_Filter = {
   metaEvidenceId_lte?: InputMaybe<Scalars['BigInt']['input']>;
   metaEvidenceId_not?: InputMaybe<Scalars['BigInt']['input']>;
   metaEvidenceId_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  nbChoices?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  nbChoices_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_not?: InputMaybe<Scalars['BigInt']['input']>;
+  nbChoices_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  nbRounds?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  nbRounds_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_not?: InputMaybe<Scalars['BigInt']['input']>;
+  nbRounds_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   or?: InputMaybe<Array<InputMaybe<Dispute_Filter>>>;
   period?: InputMaybe<Period>;
   period_in?: InputMaybe<Array<Period>>;
   period_not?: InputMaybe<Period>;
   period_not_in?: InputMaybe<Array<Period>>;
+  rounds_?: InputMaybe<Round_Filter>;
   ruled?: InputMaybe<Scalars['Boolean']['input']>;
   ruled_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   ruled_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -202,7 +231,10 @@ export enum Dispute_OrderBy {
   Id = 'id',
   LastPeriodChange = 'lastPeriodChange',
   MetaEvidenceId = 'metaEvidenceId',
+  NbChoices = 'nbChoices',
+  NbRounds = 'nbRounds',
   Period = 'period',
+  Rounds = 'rounds',
   Ruled = 'ruled',
   Ruling = 'ruling'
 }
@@ -285,6 +317,8 @@ export enum EvidenceGroup_OrderBy {
   DisputeId = 'dispute__id',
   DisputeLastPeriodChange = 'dispute__lastPeriodChange',
   DisputeMetaEvidenceId = 'dispute__metaEvidenceId',
+  DisputeNbChoices = 'dispute__nbChoices',
+  DisputeNbRounds = 'dispute__nbRounds',
   DisputePeriod = 'dispute__period',
   DisputeRuled = 'dispute__ruled',
   DisputeRuling = 'dispute__ruling',
@@ -387,7 +421,7 @@ export enum Period {
   Appeal = 'APPEAL',
   Commit = 'COMMIT',
   Evidence = 'EVIDENCE',
-  Execution = 'EXECUTION',
+  Executed = 'EXECUTED',
   Vote = 'VOTE'
 }
 
@@ -403,6 +437,8 @@ export type Query = {
   evidenceGroup?: Maybe<EvidenceGroup>;
   evidenceGroups: Array<EvidenceGroup>;
   evidences: Array<Evidence>;
+  round?: Maybe<Round>;
+  rounds: Array<Round>;
 };
 
 
@@ -482,6 +518,89 @@ export type QueryEvidencesArgs = {
   where?: InputMaybe<Evidence_Filter>;
 };
 
+
+export type QueryRoundArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryRoundsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Round_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Round_Filter>;
+};
+
+export type Round = {
+  __typename?: 'Round';
+  dispute: Dispute;
+  id: Scalars['ID']['output'];
+  jurors: Array<Scalars['Bytes']['output']>;
+};
+
+export type Round_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Round_Filter>>>;
+  dispute?: InputMaybe<Scalars['String']['input']>;
+  dispute_?: InputMaybe<Dispute_Filter>;
+  dispute_contains?: InputMaybe<Scalars['String']['input']>;
+  dispute_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  dispute_ends_with?: InputMaybe<Scalars['String']['input']>;
+  dispute_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  dispute_gt?: InputMaybe<Scalars['String']['input']>;
+  dispute_gte?: InputMaybe<Scalars['String']['input']>;
+  dispute_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  dispute_lt?: InputMaybe<Scalars['String']['input']>;
+  dispute_lte?: InputMaybe<Scalars['String']['input']>;
+  dispute_not?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_contains?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  dispute_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  dispute_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  dispute_starts_with?: InputMaybe<Scalars['String']['input']>;
+  dispute_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  jurors?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  jurors_contains?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  jurors_contains_nocase?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  jurors_not?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  jurors_not_contains?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  jurors_not_contains_nocase?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Round_Filter>>>;
+};
+
+export enum Round_OrderBy {
+  Dispute = 'dispute',
+  DisputeArbitrated = 'dispute__arbitrated',
+  DisputeCreatedAtBlock = 'dispute__createdAtBlock',
+  DisputeId = 'dispute__id',
+  DisputeLastPeriodChange = 'dispute__lastPeriodChange',
+  DisputeMetaEvidenceId = 'dispute__metaEvidenceId',
+  DisputeNbChoices = 'dispute__nbChoices',
+  DisputeNbRounds = 'dispute__nbRounds',
+  DisputePeriod = 'dispute__period',
+  DisputeRuled = 'dispute__ruled',
+  DisputeRuling = 'dispute__ruling',
+  Id = 'id',
+  Jurors = 'jurors'
+}
+
 export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
@@ -494,6 +613,8 @@ export type Subscription = {
   evidenceGroup?: Maybe<EvidenceGroup>;
   evidenceGroups: Array<EvidenceGroup>;
   evidences: Array<Evidence>;
+  round?: Maybe<Round>;
+  rounds: Array<Round>;
 };
 
 
@@ -573,6 +694,24 @@ export type SubscriptionEvidencesArgs = {
   where?: InputMaybe<Evidence_Filter>;
 };
 
+
+export type SubscriptionRoundArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionRoundsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Round_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Round_Filter>;
+};
+
 export type _Block_ = {
   __typename?: '_Block_';
   /** The hash of the block */
@@ -612,7 +751,7 @@ export type DisputeQueryVariables = Exact<{
 }>;
 
 
-export type DisputeQuery = { __typename?: 'Query', dispute?: { __typename?: 'Dispute', arbitrated: any, metaEvidenceId: any, ruling: any, ruled: boolean, period: Period, lastPeriodChange: any, createdAtBlock: any, arbitrableHistory?: { __typename?: 'ArbitrableHistory', metaEvidence: string } | null, evidenceGroup?: { __typename?: 'EvidenceGroup', length: any, evidence: Array<{ __typename?: 'Evidence', creationTime: any, URI: string, sender: any }> } | null } | null };
+export type DisputeQuery = { __typename?: 'Query', dispute?: { __typename?: 'Dispute', arbitrated: any, metaEvidenceId: any, ruled: boolean, ruling: any, period: Period, lastPeriodChange: any, createdAtBlock: any, nbChoices: any, arbitrableHistory?: { __typename?: 'ArbitrableHistory', metaEvidence: string } | null, evidenceGroup: { __typename?: 'EvidenceGroup', length: any, evidence: Array<{ __typename?: 'Evidence', creationTime: any, URI: string, sender: any }> } } | null };
 
 
 export const DisputeDocument = gql`
@@ -623,11 +762,12 @@ export const DisputeDocument = gql`
     arbitrableHistory {
       metaEvidence
     }
-    ruling
     ruled
+    ruling
     period
     lastPeriodChange
     createdAtBlock
+    nbChoices
     evidenceGroup {
       length
       evidence {

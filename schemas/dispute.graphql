@@ -5,9 +5,10 @@ query Dispute($id: ID!) {
     arbitrableHistory {
       metaEvidence
     }
-    ruling
     ruled
+    ruling
     period
+    nbChoices
     lastPeriodChange
     createdAtBlock
     evidenceGroup {

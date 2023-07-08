@@ -1,0 +1,21 @@
+{
+    "details": "Case details",
+    "period": {
+        "title": "Period",
+        "steps": ["Evidence", "Vote", "Executed"]
+    },
+    "question": {
+        "title": "Question",
+        "winner": "Winner"
+    },
+    "evidence": {
+        "title": "Evidence ({{n}} items)",
+        "untitled": "untitled",
+        "submitted_by": "Submitted by",
+        "at": "at"
+    },
+    "justifications": {
+        "title": "Justifications ({{n}} items)",
+        "vote": "Vote"
+    }
+}

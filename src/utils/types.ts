@@ -5,11 +5,25 @@ export interface MetaEvidenceFile {
   fileURI: string;
   evidenceDisplayInterfaceURI?: string;
   arbitrableInterfaceURI?: string;
+  dynamicScriptURI?: string;
   rulingOptions: {
     type: string;
     titles: string[];
     descriptions: string[];
   };
+}
+
+export interface EvidenceFile {
+  title?: string;
+  description?: string;
+  fileURI?: string;
+}
+
+export interface EvidenceData {
+  creationTime: number;
+  URI?: string;
+  sender: any;
+  file?: EvidenceFile;
 }
 
 export interface Justification {

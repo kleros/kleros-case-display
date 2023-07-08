@@ -7,10 +7,10 @@ interface StepsProps {
 }
 
 const Steps: React.FC<StepsProps> = ({ current, list }) => (
-  <div className="w-full lg:px-12 xl:px-36 flex items-center">
+  <ul className="w-full lg:px-12 xl:px-36 flex items-center">
     {list.map((item, i) => (
       <Fragment key={i}>
-        <div className="m-0.5 md:m-1 flex items-center">
+        <li className="m-0.5 md:m-1 flex items-center">
           <div
             className={cn(
               "px-2 bg-white rounded-full centered text-sm sm:text-lg lg:text-xl whitespace-nowrap",
@@ -22,13 +22,13 @@ const Steps: React.FC<StepsProps> = ({ current, list }) => (
           >
             {`${i + 1}. ${item}`}
           </div>
-        </div>
+        </li>
         {i !== list.length - 1 && (
           <div className={cn("h-0.5 w-full gradient opacity-20")} />
         )}
       </Fragment>
     ))}
-  </div>
+  </ul>
 );
 
 export default Steps;

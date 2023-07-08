@@ -3,15 +3,13 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
-  async redirects() {
-    return [
-      {
-        source: "/cases/:id",
-        destination: "/case/:id",
-        permanent: false,
-      },
-    ];
-  },
+  redirects: async () => [
+    {
+      source: "/cases/:id",
+      destination: "/case/:id",
+      permanent: false,
+    },
+  ],
 };
 
 module.exports = nextConfig;

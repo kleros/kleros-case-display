@@ -1,0 +1,21 @@
+{
+    "details": "Detalles del Caso",
+    "period": {
+        "title": "Período",
+        "steps": ["Evidencia", "Votación", "Ejecutado"]
+    },
+    "question": {
+        "title": "Pregunta",
+        "winner": "Ganador"
+    },
+    "evidence": {
+        "title": "Evidencia ({{n}} artículos)",
+        "untitled": "untitled",
+        "submitted_by": "Enviado por",
+        "at": "en"
+    },
+    "justifications": {
+        "title": "Justificaciones ({{n}} artículos)",
+        "vote": "Voto"
+    }
+}
