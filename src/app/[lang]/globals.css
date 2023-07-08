@@ -11,6 +11,12 @@
   section {
     @apply w-full flex flex-col items-center;
   }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @tailwind components;
@@ -25,6 +31,14 @@
 
   .divider-v {
     @apply w-0.5 h-full gradient opacity-20 rounded;
+  }
+
+  .loader {
+    @apply w-16 h-16 border-4 border-sky-500 border-b-white rounded-full inline-block box-border animate-spin;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    @apply block;
   }
 }
 

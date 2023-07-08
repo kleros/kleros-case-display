@@ -2,26 +2,23 @@ import { Suspense, useMemo } from "react";
 import { explorerLink, ipfs, shortenAddress } from "@utils";
 import Link from "next/link";
 import Image from "next/image";
-
-export interface EvidenceFile {
-  title?: string;
-  description?: string;
-  fileURI?: string;
-}
-
-export interface EvidenceData {
-  creationTime: number;
-  URI?: string;
-  sender: any;
-  file?: EvidenceFile;
-}
+import { EvidenceData } from "@utils/types";
+import { Locale } from "@i18n";
+import { useTranslation } from "@i18n/client";
 
 interface EvidenceItemInterface {
   index: number;
   evidence: EvidenceData;
+  lang: Locale;
 }
 
-const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
+const EvidenceItem: React.FC<EvidenceItemInterface> = ({
+  lang,
+  index,
+  evidence,
+}) => {
+  const t = useTranslation(lang, "case");
+
   const fileNameDisplay = useMemo(() => {
     if (evidence.file?.fileURI) {
       const lastQuerySubstring = evidence.file.fileURI.split("/").at(-1);
@@ -37,16 +34,18 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
 
   return (
     <div className="w-full py-4 flex">
-      <span className="w-12 pr-2 flex flex-col items-end text-slate-300 text-3xl text-semibold">
+      <span className="w-min-12 pr-2 flex flex-col items-end text-slate-300 text-3xl text-semibold">
         {index + 1}.
       </span>
       <div className="flex flex-col">
         {evidence.file?.title ? (
           <h2 className="text-3xl">{evidence.file.title}</h2>
         ) : (
-          <h2 className="text-3xl text-slate-300">Untitled</h2>
+          <h2 className="text-3xl text-slate-300">{t("evidence.untitled")}</h2>
         )}
-        {evidence.file?.description && <p>{evidence.file.description}</p>}
+        {evidence.file?.description && (
+          <p className="my-2">{evidence.file.description}</p>
+        )}
         {evidence.file?.fileURI && (
           <span className="flex items-center text-sky-500 cursor-pointer text-lg font-semibold">
             <Image
@@ -66,8 +65,8 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
           </span>
         )}
         <div className="flex flex-col">
-          <span>
-            Submitted by{" "}
+          <span className="text-slate-500">
+            {`${t("evidence.submitted_by")} `}
             <Link
               className="text-blue-500 underline underline-offset-2"
               href={explorerLink(evidence.sender)}
@@ -76,7 +75,7 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({ index, evidence }) => {
             >
               {shortenAddress(evidence.sender)}
             </Link>
-            {" at "}
+            {` ${t("evidence.at")} `}
             <span>
               <Suspense fallback={null}>
                 {new Date(evidence.creationTime * 1000).toLocaleString()}
