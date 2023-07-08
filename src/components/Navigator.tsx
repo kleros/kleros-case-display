@@ -19,7 +19,7 @@ const Navigator: React.FC<NavigatorProps> = ({ lang }) => {
         action={(formData) => {
           const disputeId = formData.get("dispute")?.toString();
           if (!disputeId) return;
-          router.push(`case/${disputeId}`);
+          router.push(`/${lang}/case/${disputeId}`);
         }}
       >
         <label htmlFor="dispute" className="text-3xl font-bold text-sky-500">
