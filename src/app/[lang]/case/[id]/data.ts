@@ -18,9 +18,8 @@ export const getSubgraphData = cache(
 
 export const getJustifications = cache(
   async (disputeId: number, appeal: number) => {
-    return [];
-    // const res = await fetch(justificationsLink(disputeId, appeal));
-    // return res.ok ? (await res.json()).payload.justifications : [];
+    const res = await fetch(justificationsLink(disputeId, appeal));
+    return res.ok ? (await res.json()).payload.justifications : [];
   }
 );
 
