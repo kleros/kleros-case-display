@@ -193,7 +193,12 @@ const DisputePage = ({
             {t("justifications.title", { n: justifications.length })}
           </h2>
           {justifications.reverse().map((justificationData, idx) => (
-            <JustificationItem key={idx} index={idx} {...justificationData} />
+            <JustificationItem
+              key={idx}
+              lang={lang}
+              index={idx}
+              {...justificationData}
+            />
           ))}
         </section>
       )}
