@@ -1,6 +1,8 @@
 query Dispute($id: ID!) {
   dispute(id: $id) {
-    arbitrated
+    arbitrated {
+      id
+    }
     metaEvidenceId
     arbitrableHistory {
       metaEvidence

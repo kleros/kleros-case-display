@@ -5,7 +5,7 @@ import {
   getMetaEvidence,
   getEvidenceWithFiles,
 } from "./data";
-import { Locale, getTranslation } from "@i18n";
+import { Locale } from "@i18n";
 
 interface DisputePageProps {
   params: {
@@ -38,7 +38,7 @@ export default async function Page({ params: { lang, id } }: DisputePageProps) {
     <Dispute
       lang={lang}
       id={disputeId}
-      arbitrated={dispute.arbitrated}
+      arbitrated={dispute.arbitrated.id}
       ruled={dispute.ruled}
       ruling={+dispute.ruling}
       period={dispute.period}
