@@ -35,7 +35,7 @@ const getEventLogs = async <
 
 export const getMetaEvidenceUriFromLogs = cache(
   async (dispute: NonNullable<DisputeQuery["dispute"]>) => {
-    const arbitrable = Arbitrable__factory.connect(dispute.arbitrated, {
+    const arbitrable = Arbitrable__factory.connect(dispute.arbitrated.id, {
       provider: rpc,
     });
 
