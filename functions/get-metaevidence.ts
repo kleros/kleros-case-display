@@ -11,8 +11,8 @@ const genSdk = (subgraph: string) =>
   );
 
 const sdk = {
-  [1]: genSdk("andreimvp/kleros-display"),
-  [100]: genSdk("andreimvp/kleros-display-mainnet"),
+  [1]: genSdk("andreimvp/kleros-display-mainnet"),
+  [100]: genSdk("andreimvp/kleros-display"),
 } as Record<number, Sdk>;
 
 const supportedChains = Object.keys(sdk).map((k) => +k);
