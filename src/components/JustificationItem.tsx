@@ -13,6 +13,7 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
   justification,
 }) => {
   const t = useTranslation(lang, "case");
+  console.log(justification, justification.split(/\n/));
   return (
     <div className="w-full py-4 flex">
       <span className="w-8 pr-2 flex flex-col items-end text-slate-300">
