@@ -23,7 +23,7 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
         </span>
       </span>
       <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words">
-        {justification.split("\n").map(line => <div key={line}>{line}<br /></div>)}
+        {justification}
       </div>
     </div>
   );
