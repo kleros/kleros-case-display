@@ -21,7 +21,7 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
           #<strong className="text-xl text-semibold">{voteID}</strong>
         </span>
       </span>
-      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300">
+      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words">
         {justification}
       </div>
     </div>

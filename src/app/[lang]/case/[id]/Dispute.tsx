@@ -175,7 +175,7 @@ const DisputePage = ({
           <h2 className="mb-4 text-3xl text-center uppercase">
             {t("evidence.title", { n: evidenceList.length })}
           </h2>
-          {evidenceList.map((evidence, idx) => (
+          {evidenceList.reverse().map((evidence, idx) => (
             <EvidenceItem
               key={idx}
               lang={lang}
