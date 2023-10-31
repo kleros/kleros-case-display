@@ -1,12 +1,30 @@
-"use server";
+"use client"; // Error components must be Client Components
 
-import { Logtail } from "@logtail/node";
+import { useEffect } from "react";
 
-export default async function Error({ error }: { error: Error }) {
-  const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-  logtail.use(async (log: any) => ({ ...log, process: __filename }));
-  logtail.error(error);
-  logtail.flush();
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
 
-  return <h2>Something went wrong!</h2>;
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+    </div>
+  );
 }
