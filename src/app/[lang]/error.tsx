@@ -1,15 +1,12 @@
-"use client";
+"use server";
 
-import { useEffect } from "react";
+import { Logtail } from "@logtail/node";
 
-export default function Error({ error }: { error: Error }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+export default async function Error({ error }: { error: Error }) {
+  const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
+  logtail.use(async (log: any) => ({ ...log, process: __filename }));
+  logtail.error(error);
+  logtail.flush();
 
-  return (
-    <>
-      <h2>Something went wrong!</h2>
-    </>
-  );
+  return <h2>Something went wrong!</h2>;
 }

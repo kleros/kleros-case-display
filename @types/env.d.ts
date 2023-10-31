@@ -3,6 +3,7 @@ declare global {
     interface ProcessEnv {
       PRIVATE_RPC_ENDPOINT: string;
       SUBGRAPH_ENDPOINT: string;
+      LOGTAIL_SOURCE_TOKEN: string;
       JUSTIFICATIONS_ENDPOINT: string;
       DATALAKE_URL: string;
       DATALAKE_KEY: string;
