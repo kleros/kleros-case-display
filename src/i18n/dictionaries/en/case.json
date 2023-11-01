@@ -14,6 +14,9 @@
         "submitted_by": "Submitted by",
         "at": "at"
     },
+    "jurors": {
+        "number": "different jurors were drawn for this dispute."
+    },
     "justifications": {
         "title": "Justifications ({{n}} items)",
         "vote": "Vote"

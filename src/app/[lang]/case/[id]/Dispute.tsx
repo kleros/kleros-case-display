@@ -191,8 +191,7 @@ const DisputePage = ({
       <section>
         <div className="divider my-12 w-3/4" />
         <span className="text-xl mb-8 text-slate-600 font-light">
-          <strong>{nbJurors}</strong> different jurors were drawn for this
-          dispute.
+          <strong>{nbJurors}</strong> {t("jurors.number")}
         </span>
       </section>
 
