@@ -33,6 +33,7 @@ interface DisputeProps {
   metaEvidence: MetaEvidenceFile | null;
   evidenceList: EvidenceData[];
   justifications: Justification[];
+  nbJurors: number;
   // t: {
   //   details: string;
   //   period: {
@@ -69,6 +70,7 @@ const DisputePage = ({
   metaEvidence,
   evidenceList,
   justifications,
+  nbJurors,
 }: DisputeProps) => {
   console.log(ruled, ruling);
   const t = useTranslation(lang, "case");
@@ -186,9 +188,15 @@ const DisputePage = ({
         </section>
       )}
 
+      <section>
+        <div className="divider my-12 w-3/4" />
+        <span className="text-xl mb-8 text-slate-600 font-light">
+          <strong>{nbJurors}</strong> {t("jurors.number")}
+        </span>
+      </section>
+
       {!!justifications.length && (
         <section>
-          <div className="divider my-12 w-3/4" />
           <h2 className="mb-4 text-3xl text-center uppercase">
             {t("justifications.title", { n: justifications.length })}
           </h2>

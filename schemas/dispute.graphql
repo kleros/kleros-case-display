@@ -1,8 +1,6 @@
-query Dispute($id: ID!) {
+query Dispute($id: ID!, $disputeID: BigInt!) {
   dispute(id: $id) {
-    arbitrated {
-      id
-    }
+    arbitrated
     metaEvidenceId
     arbitrableHistory {
       metaEvidence
@@ -11,7 +9,7 @@ query Dispute($id: ID!) {
     ruling
     period
     nbChoices
-    lastPeriodChange
+    lastPeriodChangeTs
     createdAtBlock
     evidenceGroup {
       length
@@ -21,5 +19,8 @@ query Dispute($id: ID!) {
         sender
       }
     }
+  }
+  draws(where: { disputeID: $disputeID, appeal: 0 }) {
+    address
   }
 }

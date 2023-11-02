@@ -24,7 +24,7 @@ export default async function Page({ params: { lang, id } }: DisputePageProps) {
     getSubgraphData("Dispute", id),
   ]);
 
-  const dispute = data?.dispute;
+  const { dispute, draws } = data;
   if (!data || !dispute) return <div>Subgraph Error...</div>;
 
   const [metaEvidence, evidence] = await Promise.all([
@@ -43,10 +43,14 @@ export default async function Page({ params: { lang, id } }: DisputePageProps) {
       ruling={+dispute.ruling}
       period={dispute.period}
       nbChoices={+dispute.nbChoices > 10 ? undefined : +dispute.nbChoices}
-      lastPeriodChange={dispute.lastPeriodChange}
+      lastPeriodChange={dispute.lastPeriodChangeTs}
       metaEvidence={metaEvidence}
       evidenceList={evidence}
       justifications={justifications}
+      nbJurors={
+        draws.reduce((acc, draw) => acc.add(draw.address), new Set<string>())
+          .size
+      }
     />
   );
 }

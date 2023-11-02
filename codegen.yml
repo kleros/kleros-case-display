@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://api.thegraph.com/subgraphs/name/andreimvp/kleros-display"
+schema: "https://api.thegraph.com/subgraphs/name/kleros/kleros-display-gnosis"
 documents: "schemas/**/*.graphql"
 generates:
   ./src/generated/graphql.ts:
