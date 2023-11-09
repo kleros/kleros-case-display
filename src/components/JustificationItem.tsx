@@ -1,7 +1,7 @@
-import React from "react";
 import { Locale } from "@i18n";
 import { useTranslation } from "@i18n/client";
 import { Justification } from "@utils/types";
+import { useMemo } from "react";
 
 interface JustificationItemInterface extends Justification {
   index: number;
@@ -14,7 +14,10 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
   justification,
 }) => {
   const t = useTranslation(lang, "case");
-  const justificationLines = justification.split(/\\r\\n|\\n|\\r|\n|\r|\r\n/);
+  const lines = useMemo(
+    () => justification.split(/\\n/).map((line) => line.replaceAll("\\", "")),
+    [justification]
+  );
 
   return (
     <div className="w-full py-4 flex">
@@ -24,13 +27,10 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
           #<strong className="text-xl text-semibold">{voteID}</strong>
         </span>
       </span>
-      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words text-justify">
-        {justificationLines.map((line, i) =>
-          <React.Fragment key={line + i}>
-            {line}
-            {i < justificationLines.length - 1 ? <br /> : null}
-          </React.Fragment>
-        )}
+      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words text-justify whitespace-pre-line">
+        {lines.map((line, i) => (
+          <p key={i}>{line}</p>
+        ))}
       </div>
     </div>
   );
