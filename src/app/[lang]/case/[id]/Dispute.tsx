@@ -17,7 +17,6 @@ import { Locale } from "@i18n";
 const displayedSteps = [
   Period.Evidence,
   Period.Vote,
-  // Period.Appeal,
   Period.Executed,
 ];
 
@@ -34,29 +33,6 @@ interface DisputeProps {
   evidenceList: EvidenceData[];
   justifications: Justification[];
   nbJurors: number;
-  // t: {
-  //   details: string;
-  //   period: {
-  //     title: string;
-  //     steps: string[];
-  //   };
-  //   question: {
-  //     title: string;
-  //     winner: string;
-  //   };
-  //   evidence: {
-  //     title: string;
-  //     items: string;
-  //     untitled: string;
-  //     submitted_by: string;
-  //     at: string;
-  //   };
-  //   justifications: {
-  //     title: string;
-  //     items: string;
-  //     vote: string;
-  //   };
-  // };
 }
 
 const DisputePage = ({
@@ -72,7 +48,6 @@ const DisputePage = ({
   justifications,
   nbJurors,
 }: DisputeProps) => {
-  console.log(ruled, ruling);
   const t = useTranslation(lang, "case");
 
   const rulingOptions = metaEvidence?.rulingOptions
