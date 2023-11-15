@@ -38,7 +38,7 @@ export default async function Page({ params: { lang, id } }: DisputePageProps) {
     <Dispute
       lang={lang}
       id={disputeId}
-      arbitrated={dispute.arbitrated.id}
+      arbitrated={dispute.arbitrated}
       ruled={dispute.ruled}
       ruling={+dispute.ruling}
       period={dispute.period}
