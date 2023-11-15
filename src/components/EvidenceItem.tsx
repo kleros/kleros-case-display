@@ -44,7 +44,7 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({
           <h2 className="text-3xl text-slate-300">{t("evidence.untitled")}</h2>
         )}
         {evidence.file?.description && (
-          <p className="my-2">{evidence.file.description}</p>
+          <p className="my-2 break-words">{evidence.file.description}</p>
         )}
         {evidence.file?.fileURI && (
           <span className="flex items-center text-sky-500 cursor-pointer text-lg font-semibold">
