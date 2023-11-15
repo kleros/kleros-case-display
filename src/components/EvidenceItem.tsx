@@ -32,14 +32,16 @@ const EvidenceItem: React.FC<EvidenceItemInterface> = ({
     return "FILE";
   }, [evidence.file?.fileURI]);
 
+  const evidenceTitle = useMemo(() => evidence.file?.title ?? evidence.file?.name, [evidence]);
+
   return (
     <div className="w-full py-4 flex">
       <span className="w-min-12 pr-2 flex flex-col items-end text-slate-300 text-3xl text-semibold">
         {index + 1}.
       </span>
       <div className="flex flex-col">
-        {evidence.file?.title ? (
-          <h2 className="text-3xl">{evidence.file.title}</h2>
+        {evidenceTitle ? (
+          <h2 className="text-3xl">{evidenceTitle}</h2>
         ) : (
           <h2 className="text-3xl text-slate-300">{t("evidence.untitled")}</h2>
         )}

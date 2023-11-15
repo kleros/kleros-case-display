@@ -15,6 +15,7 @@ export interface MetaEvidenceFile {
 
 export interface EvidenceFile {
   title?: string;
+  name?: string;
   description?: string;
   fileURI?: string;
 }
