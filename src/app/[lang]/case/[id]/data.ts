@@ -88,7 +88,7 @@ export const getMetaEvidence = cache(
 export const getEvidenceWithFiles = cache(async (evidence: EvidenceData[]) =>
   (
     await Promise.all(
-      evidence.map((ev) =>
+      evidence.sort((a, b) => b.creationTime - a.creationTime).map((ev) =>
         ev.URI ? ipfsFetcher<EvidenceFile>(ev.URI) : undefined
       )
     )

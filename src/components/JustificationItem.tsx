@@ -1,7 +1,9 @@
+import { useMemo } from "react";
+import Link from "next/link";
 import { Locale } from "@i18n";
 import { useTranslation } from "@i18n/client";
 import { Justification } from "@utils/types";
-import { useMemo } from "react";
+import { regex } from "@utils";
 
 interface JustificationItemInterface extends Justification {
   index: number;
@@ -14,9 +16,15 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
   justification,
 }) => {
   const t = useTranslation(lang, "case");
-  const lines = useMemo(
-    () => justification.split(/\\n/).map((line) => line.replaceAll("\\", "")),
-    [justification]
+  const lines = useMemo(() =>
+    justification
+      .split(/\\n/)
+      .map(
+        (line) => line
+          .replaceAll("\\", "")
+          .replaceAll(regex.url, (substring) => `\\${substring}\\`)
+      )
+    , [justification]
   );
 
   return (
@@ -28,9 +36,23 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
         </span>
       </span>
       <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words whitespace-pre-line">
-        {lines.map((line, i) => (
-          <p key={i}>{line}</p>
-        ))}
+        {lines.map((line) =>
+          <p key={line}>
+            {line.split("\\").map((substring) => (
+              substring.match(regex.url)
+                ? <Link
+                    className="text-blue-500 underline underline-offset-2"
+                    href={substring}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    key={substring}
+                  >
+                      {substring}
+                  </Link>
+                : substring
+            ))}
+          </p>
+        )}
       </div>
     </div>
   );
