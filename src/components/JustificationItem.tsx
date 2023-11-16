@@ -35,7 +35,7 @@ const JustificationItem: React.FC<JustificationItemInterface> = ({
           #<strong className="text-xl text-semibold">{voteID}</strong>
         </span>
       </span>
-      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words text-justify whitespace-pre-line">
+      <div className="pl-2 w-full flex flex-col border-l-2 border-slate-300 break-words whitespace-pre-line">
         {lines.map((line) =>
           <p key={line}>
             {line.split("\\").map((substring) => (
