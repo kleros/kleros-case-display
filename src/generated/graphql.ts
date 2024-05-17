@@ -19,7 +19,13 @@ export type Scalars = {
   BigInt: { input: any; output: any; }
   Bytes: { input: any; output: any; }
   Int8: { input: any; output: any; }
+  Timestamp: { input: any; output: any; }
 };
+
+export enum Aggregation_Interval {
+  Day = 'day',
+  Hour = 'hour'
+}
 
 export type ArbitrableHistory = {
   __typename?: 'ArbitrableHistory';
@@ -139,20 +145,26 @@ export enum Counter_OrderBy {
 
 export type Court = {
   __typename?: 'Court';
-  description?: Maybe<Scalars['String']['output']>;
   hiddenVotes?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
-  name?: Maybe<Scalars['String']['output']>;
+  metadata?: Maybe<CourtMetadata>;
   policy?: Maybe<Scalars['String']['output']>;
-  requiredSkills?: Maybe<Scalars['String']['output']>;
   summary?: Maybe<Scalars['String']['output']>;
   timesPerPeriod?: Maybe<Array<Scalars['BigInt']['output']>>;
 };
 
-export type Court_Filter = {
+export type CourtMetadata = {
+  __typename?: 'CourtMetadata';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  requiredSkills?: Maybe<Scalars['String']['output']>;
+};
+
+export type CourtMetadata_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Court_Filter>>>;
+  and?: InputMaybe<Array<InputMaybe<CourtMetadata_Filter>>>;
   description?: InputMaybe<Scalars['String']['input']>;
   description_contains?: InputMaybe<Scalars['String']['input']>;
   description_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -173,6 +185,68 @@ export type Court_Filter = {
   description_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   description_starts_with?: InputMaybe<Scalars['String']['input']>;
   description_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_contains?: InputMaybe<Scalars['String']['input']>;
+  name_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
+  name_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  name_gt?: InputMaybe<Scalars['String']['input']>;
+  name_gte?: InputMaybe<Scalars['String']['input']>;
+  name_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  name_lt?: InputMaybe<Scalars['String']['input']>;
+  name_lte?: InputMaybe<Scalars['String']['input']>;
+  name_not?: InputMaybe<Scalars['String']['input']>;
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
+  name_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  name_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  name_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  name_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  name_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
+  name_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  or?: InputMaybe<Array<InputMaybe<CourtMetadata_Filter>>>;
+  requiredSkills?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_contains?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_ends_with?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_gt?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_gte?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  requiredSkills_lt?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_lte?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_contains?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  requiredSkills_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_starts_with?: InputMaybe<Scalars['String']['input']>;
+  requiredSkills_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum CourtMetadata_OrderBy {
+  Description = 'description',
+  Id = 'id',
+  Name = 'name',
+  RequiredSkills = 'requiredSkills'
+}
+
+export type Court_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Court_Filter>>>;
   hiddenVotes?: InputMaybe<Scalars['Boolean']['input']>;
   hiddenVotes_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   hiddenVotes_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -197,26 +271,27 @@ export type Court_Filter = {
   id_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id_starts_with?: InputMaybe<Scalars['String']['input']>;
   id_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  name_contains?: InputMaybe<Scalars['String']['input']>;
-  name_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  name_ends_with?: InputMaybe<Scalars['String']['input']>;
-  name_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  name_gt?: InputMaybe<Scalars['String']['input']>;
-  name_gte?: InputMaybe<Scalars['String']['input']>;
-  name_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  name_lt?: InputMaybe<Scalars['String']['input']>;
-  name_lte?: InputMaybe<Scalars['String']['input']>;
-  name_not?: InputMaybe<Scalars['String']['input']>;
-  name_not_contains?: InputMaybe<Scalars['String']['input']>;
-  name_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  name_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  name_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  name_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  name_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  name_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  name_starts_with?: InputMaybe<Scalars['String']['input']>;
-  name_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<Scalars['String']['input']>;
+  metadata_?: InputMaybe<CourtMetadata_Filter>;
+  metadata_contains?: InputMaybe<Scalars['String']['input']>;
+  metadata_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata_ends_with?: InputMaybe<Scalars['String']['input']>;
+  metadata_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata_gt?: InputMaybe<Scalars['String']['input']>;
+  metadata_gte?: InputMaybe<Scalars['String']['input']>;
+  metadata_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  metadata_lt?: InputMaybe<Scalars['String']['input']>;
+  metadata_lte?: InputMaybe<Scalars['String']['input']>;
+  metadata_not?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_contains?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  metadata_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  metadata_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  metadata_starts_with?: InputMaybe<Scalars['String']['input']>;
+  metadata_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   or?: InputMaybe<Array<InputMaybe<Court_Filter>>>;
   policy?: InputMaybe<Scalars['String']['input']>;
   policy_contains?: InputMaybe<Scalars['String']['input']>;
@@ -238,26 +313,6 @@ export type Court_Filter = {
   policy_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   policy_starts_with?: InputMaybe<Scalars['String']['input']>;
   policy_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_contains?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_ends_with?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_gt?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_gte?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  requiredSkills_lt?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_lte?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_contains?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  requiredSkills_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_starts_with?: InputMaybe<Scalars['String']['input']>;
-  requiredSkills_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   summary?: InputMaybe<Scalars['String']['input']>;
   summary_contains?: InputMaybe<Scalars['String']['input']>;
   summary_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -287,12 +342,14 @@ export type Court_Filter = {
 };
 
 export enum Court_OrderBy {
-  Description = 'description',
   HiddenVotes = 'hiddenVotes',
   Id = 'id',
-  Name = 'name',
+  Metadata = 'metadata',
+  MetadataDescription = 'metadata__description',
+  MetadataId = 'metadata__id',
+  MetadataName = 'metadata__name',
+  MetadataRequiredSkills = 'metadata__requiredSkills',
   Policy = 'policy',
-  RequiredSkills = 'requiredSkills',
   Summary = 'summary',
   TimesPerPeriod = 'timesPerPeriod'
 }
@@ -513,12 +570,9 @@ export enum Dispute_OrderBy {
   ArbitrableHistoryMetaEvidence = 'arbitrableHistory__metaEvidence',
   Arbitrated = 'arbitrated',
   Court = 'court',
-  CourtDescription = 'court__description',
   CourtHiddenVotes = 'court__hiddenVotes',
   CourtId = 'court__id',
-  CourtName = 'court__name',
   CourtPolicy = 'court__policy',
-  CourtRequiredSkills = 'court__requiredSkills',
   CourtSummary = 'court__summary',
   CreatedAtBlock = 'createdAtBlock',
   CurrentRound = 'currentRound',
@@ -817,6 +871,8 @@ export type Query = {
   counter?: Maybe<Counter>;
   counters: Array<Counter>;
   court?: Maybe<Court>;
+  courtMetadata?: Maybe<CourtMetadata>;
+  courtMetadata_collection: Array<CourtMetadata>;
   courts: Array<Court>;
   dispute?: Maybe<Dispute>;
   disputes: Array<Dispute>;
@@ -882,6 +938,24 @@ export type QueryCourtArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryCourtMetadataArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryCourtMetadata_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<CourtMetadata_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<CourtMetadata_Filter>;
 };
 
 
@@ -1135,6 +1209,8 @@ export type Subscription = {
   counter?: Maybe<Counter>;
   counters: Array<Counter>;
   court?: Maybe<Court>;
+  courtMetadata?: Maybe<CourtMetadata>;
+  courtMetadata_collection: Array<CourtMetadata>;
   courts: Array<Court>;
   dispute?: Maybe<Dispute>;
   disputes: Array<Dispute>;
@@ -1200,6 +1276,24 @@ export type SubscriptionCourtArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionCourtMetadataArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionCourtMetadata_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<CourtMetadata_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<CourtMetadata_Filter>;
 };
 
 
@@ -1656,6 +1750,8 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
   number: Scalars['Int']['output'];
+  /** The hash of the parent block */
+  parentHash?: Maybe<Scalars['Bytes']['output']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']['output']>;
 };
