@@ -4,9 +4,13 @@ import { isAddress } from "ethers";
 export const ipfs = (uri: string) =>
   `${process.env.NEXT_PUBLIC_IPFS_ENDPOINT}${uri}`;
 
-export const ipfsFetcher = async <T>(ipfsURI: string): Promise<T> => {
-  const res = await axios.get(ipfs(ipfsURI));
-  return res.data;
+export const ipfsFetcher = async <T>(ipfsURI: string): Promise<T | undefined> => {
+  try {
+    const res = await axios.get(ipfs(ipfsURI));
+    return res.data;
+  } catch {
+    return undefined;
+  }
 };
 
 export const explorerLink = (address: string) =>
