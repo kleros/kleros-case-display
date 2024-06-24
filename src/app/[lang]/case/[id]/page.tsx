@@ -44,7 +44,7 @@ export default async function Page({ params: { lang, id } }: DisputePageProps) {
       period={dispute.period}
       nbChoices={+dispute.nbChoices > 10 ? undefined : +dispute.nbChoices}
       lastPeriodChange={dispute.lastPeriodChangeTs}
-      metaEvidence={metaEvidence}
+      metaEvidence={metaEvidence ?? null}
       evidenceList={evidence}
       justifications={justifications}
       nbJurors={
